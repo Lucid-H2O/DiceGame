@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
-
+import Slider from "./Slider";
+import Controls from "./Controls";
 export default function App() {
   
-  const [value,setValue]=useState()
+  const [threshold,setthreshold]=useState(50)
   useEffect(()=>{
-  },[value])
+  },[threshold])
+
+  const [result,setResult]=useState()
+  useEffect(()=>{
+  },[result])
   const [seeds,setSeeds]=useState([])
 
   async function getSeed() {
@@ -34,18 +39,42 @@ export default function App() {
     getSeed().then((seed)=>{
       getVal(seed)
       .then((result) => {
-      console.log(result.data);
-      setValue(result.data)
+      setResult(result.data)
+      if(result.data < 50) {
+          document.getElementById("dicePointer").style.marginLeft = (`${result.data* 4.84 + 8}px`);
+      }
+      else{
+        document.getElementById("dicePointer").style.marginLeft = (`${result.data* 5.16 - 16}px`);
+      }
+      
       })
     })
   }
 
+  const handleSliderChange = (event) => {
+    if(event.target.value >= 0 && event.target.value <= 100){
+      setthreshold(event.target.value);
+      document.getElementById("under").style.width = (`${event.target.value}%`);
+    }
+    else if(event.target.value < 2){
+      setthreshold(2);
+      document.getElementById("under").style.width = (`2%`);
+    }
+    else if(event.target.value > 98){
+      setthreshold(98);
+      document.getElementById("under").style.width = (`98%`);
+    }
+    
+    
+  };
 
   return (
-  <div className="app">
-      <h2>{value}</h2>
-      <button className="menu-btn" onClick={onClickHandler}>Get </button>
+  <div className="mt-10 text-lg mx-auto grid grid-cols-1 w-[1000px] py-4 px-8 rounded-md bg-[#1f4057] shadow-lg">
+    <Slider setCurrentthreshold={setthreshold} currentThreshold={threshold} result={result} change={handleSliderChange}/>
+    <Controls onClickHandler={onClickHandler} threshold={threshold} result={result} />
   </div>
+
+    
   )
 
 }
