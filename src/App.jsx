@@ -4,14 +4,19 @@ import Slider from "./Slider";
 import Controls from "./Controls";
 export default function App() {
   
-  const [threshold,setthreshold]=useState(50)
+  const [threshold,setThreshold]=useState(50)
   useEffect(()=>{
   },[threshold])
 
   const [result,setResult]=useState()
+
   useEffect(()=>{
   },[result])
+
+  const [over, setOver]=useState(true)
+
   const [seeds,setSeeds]=useState([])
+  const [results, setResults]=useState([])
 
   async function getSeed() {
     var promise = await axios.post('https://api.random.org/json-rpc/4/invoke',{
@@ -37,6 +42,7 @@ export default function App() {
   
   function onClickHandler(){
     getSeed().then((seed)=>{
+
       getVal(seed)
       .then((result) => {
       setResult(result.data)
@@ -52,26 +58,25 @@ export default function App() {
   }
 
   const handleSliderChange = (event) => {
-    if(event.target.value >= 0 && event.target.value <= 100){
-      setthreshold(event.target.value);
+    if(event.target.value >= 2 && event.target.value <= 98){
+      setThreshold(event.target.value);
       document.getElementById("under").style.width = (`${event.target.value}%`);
     }
     else if(event.target.value < 2){
-      setthreshold(2);
+      setThreshold(2);
       document.getElementById("under").style.width = (`2%`);
     }
     else if(event.target.value > 98){
-      setthreshold(98);
+      setThreshold(98);
       document.getElementById("under").style.width = (`98%`);
     }
-    
-    
   };
+
 
   return (
   <div className="mt-10 text-lg mx-auto grid grid-cols-1 w-[1000px] py-4 px-8 rounded-md bg-[#1f4057] shadow-lg">
-    <Slider setCurrentthreshold={setthreshold} currentThreshold={threshold} result={result} change={handleSliderChange}/>
-    <Controls onClickHandler={onClickHandler} threshold={threshold} result={result} />
+    <Slider setCurrentThreshold={setThreshold} currentThreshold={threshold} result={result} change={handleSliderChange} over={over}/>
+    <Controls onClickHandler={onClickHandler} setThreshold={setThreshold} threshold={threshold} result={result} over={over} setOver={setOver}/>
   </div>
 
     
