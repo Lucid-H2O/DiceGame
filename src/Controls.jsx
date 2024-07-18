@@ -112,7 +112,7 @@ export default function Controls(props){
         <div className="flex gap-2 mt-2">
             <div className="flex-grow flex flex-col mx-auto rounded-sm w-[calc(66.666%+8px)] ">
                 <div className='mb-[2px]'>
-                   <label className="float-left text-xs text-[#cbd3d8] ml-1">Bet Amount</label> 
+                   <label className="float-left text-xs text-[#cbd3d8] ml-1">Wager Amount</label> 
                 </div>
                 <div className="flex-grow flex bg-[#1f4057]  text-base border-[#28506d] border-4 p-[2px] text-[#abb2b6] rounded-sm shadow-md ">
                     <input type="number" className="w-full bg-transparent" placeholder="1.00"/>
@@ -122,7 +122,7 @@ export default function Controls(props){
                 <div className='mb-5'>
                 </div>
                 <div className="flex-grow ">
-                    <button onClick={props.onClickHandler} className='bg-[#3fe247] border-0 border-none cursor-pointer rounded-sm w-full h-full shadow-lg active:opacity-90'>Bet</button>
+                    <button onClick={props.onClickHandler} className='bg-[#3fe247] border-0 border-none cursor-pointer rounded-sm w-full h-full shadow-lg active:opacity-90'>Roll</button>
                 </div>
             </div>
             
